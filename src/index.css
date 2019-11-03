@@ -11,3 +11,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.todoItem{
+  display: flex;
+  justify-content: space-between;
+}
+.todoItem .title{
+  font-weight: bold;
+}
+.todoItem .added{
+  font-size: .8em;
+}

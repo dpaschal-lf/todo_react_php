@@ -1,6 +1,6 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import TodoItem from './components/todoitem/todoitem.jsx';
 
 class App extends React.Component{
   constructor(props){
@@ -23,7 +23,7 @@ class App extends React.Component{
   view_list(){
     return this.state.data.map( dataItem =>{
               return(
-                <div key={dataItem.ID}>{dataItem.title}</div>
+                <TodoItem key={dataItem.ID} {...dataItem} />
               );
             })
 
