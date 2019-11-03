@@ -2,8 +2,9 @@ import React from 'react';
 
 export default props =>{
     const activeStateAttribute = props.status==='active' ? 'checked' : '';
+    debugger;
     return(
-    <div className="todoItem">
+    <div className="todoItem" onClick={props.onClick}>
         <div className="title">{props.title}</div>
         <div className="added">{props.added}</div>
         <div className="controlDiv">
