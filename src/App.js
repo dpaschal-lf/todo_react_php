@@ -1,18 +1,34 @@
 import React from 'react';
 import './App.css';
 import TodoItem from './components/todoitem/todoitem.jsx';
+import TodoItemDetails from './components/todoitem/todoitemdetails.jsx';
 
 class App extends React.Component{
   constructor(props){
     super(props);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.updateView = this.updateView.bind(this);
+    this.updateItem = this.updateItem.bind(this);
     this.state = {
       view: 'list',
-      data: []
+      data: [],
+      viewID: null
     }
   }
   componentDidMount(){
+    this.getCurrentList();
+  }
+  updateItem(data, reload=true){
+    const processedData = new FormData();
+    for( var key in data){
+      processedData.append(key, data[key]);
+    }
+    fetch('http://localhost/lfz/_practice/todo_complete/public/api/server/todo_update.php', {
+      'method': 'POST',
+      'body': processedData
+    }).then( ()=>  this.getCurrentList() );
+  }
+  getCurrentList(){
     fetch('http://localhost/lfz/_practice/todo_complete/public/api/server/todo_get.php')
       .then( response => response.json())
       .then( data => {
@@ -23,7 +39,7 @@ class App extends React.Component{
       })
   }
   updateView(newView, id=null){
-    const newViewState = {...this.state};
+    const newViewState = { view: newView };
     if(id){
       newViewState.viewID = id;
     }
@@ -32,9 +48,9 @@ class App extends React.Component{
   view_list(){
     return this.state.data.map( dataItem =>{
               return(
-                <TodoItem key={dataItem.ID} {...dataItem} onClick={()=>{
+                <TodoItem key={dataItem.ID} {...dataItem} onClickHandler={()=>{
                   this.updateView('item',dataItem.ID)
-                }}/>
+                }} onCheckToggle={this.updateItem}/>
               );
             })
 
@@ -42,15 +58,7 @@ class App extends React.Component{
   view_item(){
     const activeStateAttribute='';
     return(
-      <div className="todoDetails">
-        <div className="title">Title</div>
-        <div className="Description">Description</div>
-        <div className="added">added</div>
-        <div className="updated">updated</div>
-        <div className="controlDiv">
-            <input type="checkbox" {...activeStateAttribute}/>
-        </div>
-      </div>
+      <TodoItemDetails id={1} changeView={this.updateView}/>
     );
   }
   render(){
