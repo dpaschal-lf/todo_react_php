@@ -45,6 +45,22 @@ class App extends React.Component{
     }
     this.setState(newViewState);
   }
+  view_create(){
+    return (
+      <div className="todoForm">
+        <div>
+          <label> Title: 
+            <input name="title" type="text" placeholder="please enter a title"/>
+          </label>
+        </div>
+        <div>
+          <label> Description: 
+            <textarea name="title" type="text" placeholder="please enter a title"></textarea>
+          </label>
+        </div>
+      </div>
+    );
+  }
   view_list(){
     return this.state.data.map( dataItem =>{
               return(
@@ -56,7 +72,6 @@ class App extends React.Component{
 
   }
   view_item(){
-    const activeStateAttribute='';
     return(
       <TodoItemDetails id={1} changeView={this.updateView}/>
     );
@@ -66,6 +81,9 @@ class App extends React.Component{
     return(
       <div>
         <h3>Todo list</h3>
+        <div className="createButton" onClick={()=>{
+          this.updateView('create');
+        }}>CREATE</div>
         { this[currentView]()}
       </div>
     )

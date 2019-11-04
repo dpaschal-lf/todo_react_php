@@ -3,8 +3,7 @@ import React from 'react';
 export default props =>{
     const handleStatusChange = (e)=>{
         e.stopPropagation();
-        e.preventDefault();
-        const element = e.target;
+        e.preventDefault();//probably not necessary
         props.onCheckToggle({id: props.itemID,status: !props.checked ? props.checkedValue : props.uncheckedValue});
     }
     return (
